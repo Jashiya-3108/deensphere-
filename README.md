@@ -1,2 +1,1747 @@
-# deensphere-
-my first website 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Companion - Complete App</title>
+    <style>
+        :root {
+            --primary-color: #10b981;
+            --secondary-color: #3b82f6;
+            --accent-color: #f59e0b;
+            --light-color: #1f2937;
+            --dark-color: #111827;
+            --success-color: #22c55e;
+            --warning-color: #ef4444;
+            --text-color: #e5e7eb;
+            --card-bg: #1e293b;
+            --border-color: #374151;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        header {
+            background-color: var(--light-color);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--light-color);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+            z-index: 100;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .mobile-nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 0.75rem 0;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+        
+        .mobile-nav-item.active {
+            color: var(--accent-color);
+        }
+        
+        .mobile-nav-icon {
+            font-size: 1.2rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .section {
+            display: none;
+            padding: 2rem 0;
+            min-height: calc(100vh - 140px);
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(17, 24, 39, 0.9), rgba(17, 24, 39, 0.9));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-color);
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--light-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+        
+        .search-box::placeholder {
+            color: #9ca3af;
+        }
+        
+        .quran-container {
+            max-height: 70vh;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .surah-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+        
+        .surah-item {
+            background: var(--light-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+        
+        .surah-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary-color);
+        }
+        
+        .surah-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .surah-number {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .surah-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        
+        .surah-name-arabic {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-family: 'Traditional Arabic', 'Scheherazade', serif;
+            margin-bottom: 0.5rem;
+        }
+        
+        .surah-details {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+        
+        .surah-revelation {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        
+        .surah-revelation.meccan {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+        
+        .surah-revelation.medinan {
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: white;
+        }
+        
+        .ayah-container {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--light-color);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .ayah-arabic {
+            font-size: 1.8rem;
+            text-align: right;
+            margin-bottom: 1rem;
+            line-height: 2.5;
+            font-family: 'Traditional Arabic', 'Scheherazade', serif;
+            color: var(--primary-color);
+        }
+        
+        .ayah-translation {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+        
+        .ayah-tamil {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            color: var(--accent-color);
+            font-style: italic;
+        }
+        
+        .ayah-number {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+        
+        .audio-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .audio-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .audio-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+        
+        .audio-btn:disabled {
+            background: #6b7280;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .back-btn {
+            background: linear-gradient(135deg, #6b7280, #9ca3af);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+        
+        .back-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+        
+        .food-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .food-category {
+            background: var(--light-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+        
+        .food-category:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary-color);
+        }
+        
+        .food-category-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .restaurant-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .restaurant-card {
+            background: var(--light-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+        
+        .restaurant-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .restaurant-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .restaurant-rating {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .restaurant-distance {
+            color: var(--text-color);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .view-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            width: 100%;
+        }
+        
+        .view-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+        
+        .prayer-times {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .prayer-time {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 8px;
+            background-color: var(--light-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--border-color);
+        }
+        
+        .prayer-time:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .prayer-time.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        .prayer-name {
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+        
+        .prayer-time.active .prayer-name {
+            color: white;
+        }
+        
+        .prayer-timing {
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+            font-weight: bold;
+        }
+        
+        .next-prayer {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+        
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .feature {
+            background: var(--light-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .feature h3 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature p {
+            color: var(--text-color);
+        }
+        
+        .islamic-pages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .page-card {
+            background: var(--light-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            border: 1px solid var(--border-color);
+        }
+        
+        .page-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .page-content {
+            padding: 1.5rem;
+        }
+        
+        .page-content h3 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .follow-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .follow-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+        
+        .settings-group {
+            margin-bottom: 2rem;
+        }
+        
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #4b5563;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .shop-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .product-card {
+            background: var(--light-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            border: 1px solid var(--border-color);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-img {
+            height: 200px;
+            background-color: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .upload-placeholder {
+            text-align: center;
+            padding: 1rem;
+            color: var(--text-color);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .product-content {
+            padding: 1.5rem;
+        }
+        
+        .product-content h3 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 0.5rem 0;
+            font-size: 1.2rem;
+        }
+        
+        .buy-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .buy-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+        
+        .upload-section {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
+            text-align: center;
+            background: var(--light-color);
+        }
+        
+        .upload-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .upload-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.05);
+        }
+        
+        .disclaimer {
+            background: linear-gradient(135deg, var(--warning-color), #f97316);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        footer {
+            background-color: var(--light-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-section a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: var(--primary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-nav {
+                display: flex;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .prayer-times {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .feature-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .surah-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .food-categories {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .restaurant-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .audio-controls {
+                flex-direction: column;
+            }
+            
+            .audio-btn {
+                width: 100%;
+            }
+        }
+        
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--light-color);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">🕌 Islamic Companion</div>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link active" data-section="today">Today</a></li>
+                <li><a href="#" class="nav-link" data-section="prayers">Prayers</a></li>
+                <li><a href="#" class="nav-link" data-section="quran">Quran</a></li>
+                <li><a href="#" class="nav-link" data-section="foods">Halal Foods</a></li>
+                <li><a href="#" class="nav-link" data-section="store">Store</a></li>
+                <li><a href="#" class="nav-link" data-section="settings">Settings</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Your Complete Islamic Companion</h1>
+            <p>Prayer times, Quran, Halal foods, Islamic store, and more - all in one app</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <!-- Today Section -->
+        <section id="today" class="section active">
+            <div class="card">
+                <h2 class="card-title">Today's Prayer Times</h2>
+                <div class="prayer-times">
+                    <div class="prayer-time">
+                        <div class="prayer-name">Fajr</div>
+                        <div class="prayer-timing">5:30 AM</div>
+                        <div class="prayer-notification">Adhan at 5:20 AM</div>
+                    </div>
+                    <div class="prayer-time">
+                        <div class="prayer-name">Dhuhr</div>
+                        <div class="prayer-timing">12:15 PM</div>
+                        <div class="prayer-notification">Adhan at 12:05 PM</div>
+                    </div>
+                    <div class="prayer-time active">
+                        <div class="prayer-name">Asr</div>
+                        <div class="prayer-timing">3:45 PM</div>
+                        <div class="prayer-notification">Adhan at 3:35 PM</div>
+                    </div>
+                    <div class="prayer-time">
+                        <div class="prayer-name">Maghrib</div>
+                        <div class="prayer-timing">6:20 PM</div>
+                        <div class="prayer-notification">Adhan at 6:10 PM</div>
+                    </div>
+                    <div class="prayer-time">
+                        <div class="prayer-name">Isha</div>
+                        <div class="prayer-timing">8:05 PM</div>
+                        <div class="prayer-notification">Adhan at 7:55 PM</div>
+                    </div>
+                </div>
+                <div class="next-prayer">Next Prayer: Maghrib in 2 hours 15 minutes</div>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title">App Features</h2>
+                <div class="feature-list">
+                    <div class="feature">
+                        <div class="feature-icon">🕌</div>
+                        <h3>Prayer Times</h3>
+                        <p>Accurate prayer times based on your location with adhan notifications.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">📖</div>
+                        <h3>Quran Reader</h3>
+                        <p>Complete Quran with 114 surahs and audio recitations.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🍽️</div>
+                        <h3>Halal Foods</h3>
+                        <p>Find halal restaurants and food options near you.</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🛍️</div>
+                        <h3>Islamic Store</h3>
+                        <p>Purchase modest clothing and Islamic accessories.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prayers Section -->
+        <section id="prayers" class="section">
+            <div class="card">
+                <h2 class="card-title">Prayer Times & Settings</h2>
+                <div class="prayer-times">
+                    <div class="prayer-time">
+                        <div class="prayer-name">Fajr</div>
+                        <div class="prayer-timing">5:30 AM</div>
+                        <div class="prayer-notification">Adhan at 5:20 AM</div>
+                    </div>
+                    <div class="prayer-time">
+                        <div class="prayer-name">Dhuhr</div>
+                        <div class="prayer-timing">12:15 PM</div>
+                        <div class="prayer-notification">Adhan at 12:05 PM</div>
+                    </div>
+                    <div class="prayer-time active">
+                        <div class="prayer-name">Asr</div>
+                        <div class="prayer-timing">3:45 PM</div>
+                        <div class="prayer-notification">Adhan at 3:35 PM</div>
+                    </div>
+                    <div class="prayer-time">
+                        <div class="prayer-name">Maghrib</div>
+                        <div class="prayer-timing">6:20 PM</div>
+                        <div class="prayer-notification">Adhan at 6:10 PM</div>
+                    </div>
+                    <div class="prayer-time">
+                        <div class="prayer-name">Isha</div>
+                        <div class="prayer-timing">8:05 PM</div>
+                        <div class="prayer-notification">Adhan at 7:55 PM</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+            <h2 class="card-title">Notification Settings</h2>
+                <div class="settings-group">
+                    <div class="setting-item">
+                        <div>
+                            <h3>Adhan Notification</h3>
+                            <p>Notify me 10 minutes before each prayer</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="adhanToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div>
+                            <h3>Quran Reminder</h3>
+                            <p>Daily reminder to read Quran</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="quranToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div>
+                            <h3>Force Adhan Notification</h3>
+                            <p>Avoid Adhan delays</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="forceAdhanToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quran Section -->
+        <section id="quran" class="section">
+            <div class="card">
+                <h2 class="card-title">The Holy Quran - 114 Surahs</h2>
+                <input type="text" class="search-box" placeholder="Search for any Surah..." id="surahSearch">
+                
+                <div class="quran-container">
+                    <div class="surah-list" id="surahList">
+                        <!-- Surahs will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ayah Display Section -->
+            <div class="card" id="ayahDisplay" style="display: none;">
+                <h2 class="card-title" id="currentSurahTitle">Surah Al-Fatiha</h2>
+                <div id="ayahsContainer">
+                    <!-- Ayahs will be populated by JavaScript -->
+                </div>
+                <div class="audio-controls">
+                    <button class="audio-btn" id="playAudio">Play Audio</button>
+                    <button class="audio-btn" id="pauseAudio" disabled>Pause</button>
+                    <button class="audio-btn" id="stopAudio" disabled>Stop</button>
+                </div>
+                <button class="back-btn" onclick="hideAyahs()">Back to Surah List</button>
+            </div>
+        </section>
+
+        <!-- Halal Foods Section -->
+        <section id="foods" class="section">
+            <div class="card">
+                <h2 class="card-title">Halal Foods Near You</h2>
+                <input type="text" class="search-box" placeholder="Search halal foods near by you..." id="foodSearch">
+                
+                <div class="food-categories">
+                    <div class="food-category" data-category="restaurants">
+                        <div class="food-category-icon">🍽️</div>
+                        <h3>Restaurants</h3>
+                        <p>Halal certified restaurants</p>
+                    </div>
+                    <div class="food-category" data-category="groceries">
+                        <div class="food-category-icon">🛒</div>
+                        <h3>Groceries</h3>
+                        <p>Halal meat & products</p>
+                    </div>
+                    <div class="food-category" data-category="catering">
+                        <div class="food-category-icon">🎉</div>
+                        <h3>Catering</h3>
+                        <p>Event catering services</p>
+                    </div>
+                    <div class="food-category" data-category="bakery">
+                        <div class="food-category-icon">🍞</div>
+                        <h3>Bakery</h3>
+                        <p>Halal baked goods</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="card-title">Popular Halal Restaurants</h3>
+                <div class="restaurant-list" id="restaurantList">
+                    <!-- Restaurants will be populated by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Store Section -->
+        <section id="store" class="section">
+            <div class="card">
+                <h2 class="card-title">Islamic Store</h2>
+                <p>Premium Islamic clothing and accessories</p>
+                
+                <div class="shop-items">
+                    <div class="product-card">
+                        <div class="product-img">
+                            <div class="upload-placeholder">
+                                <div class="upload-icon">📷</div>
+                                <div>Upload Abaya Image</div>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <h3>Premium Imported Abaya</h3>
+                            <p>Elegant and modest abaya for Muslim women</p>
+                            <div class="product-price">$49.99</div>
+                            <button class="buy-btn">Shop Now</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-img">
+                            <div class="upload-placeholder">
+                                <div class="upload-icon">📷</div>
+                                <div>Upload Hijab Image</div>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <h3>Designer Hijab</h3>
+                            <p>Comfortable and stylish hijab in various colors</p>
+                            <div class="product-price">$24.99</div>
+                            <button class="buy-btn">Shop Now</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-img">
+                            <div class="upload-placeholder">
+                                <div class="upload-icon">📷</div>
+                                <div>Upload Prayer Set Image</div>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <h3>Islamic Prayer Set</h3>
+                            <p>Complete prayer set with mat and accessories</p>
+                            <div class="product-price">$34.99</div>
+                            <button class="buy-btn">Shop Now</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-img">
+                            <div class="upload-placeholder">
+                                <div class="upload-icon">📷</div>
+                                <div>Upload Quran Image</div>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <h3>Quran with Stand</h3>
+                            <p>Beautiful Quran with wooden stand</p>
+                            <div class="product-price">$39.99</div>
+                            <button class="buy-btn">Shop Now</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="upload-section">
+                    <h3>Upload Your Product Images</h3>
+                    <p>Add images from your gallery to customize the store</p>
+                    <div class="upload-btn" id="uploadTrigger">Choose Images from Gallery</div>
+                    <input type="file" id="fileUpload" multiple accept="image/*" style="display: none;">
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings" class="section">
+            <div class="card">
+                <h2 class="card-title">App Settings</h2>
+                
+                <div class="settings-group">
+                    <div class="setting-item">
+                        <div>
+                            <h3>Location Services</h3>
+                            <p>Use your location for accurate prayer times</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="locationToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div>
+                            <h3>Dark Mode</h3>
+                            <p>Use dark theme for the app</p>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="darkModeToggle" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div>
+                            <h3>Language</h3>
+                            <p>App language settings</p>
+                        </div>
+                        <div>English</div>
+                    </div>
+                    <div class="setting-item">
+                        <div>
+                            <h3>Calculation Method</h3>
+                            <p>Prayer time calculation method</p>
+                        </div>
+                        <div>Muslim World League</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title">Recommended Islamic Pages</h3>
+                <div class="islamic-pages">
+                    <div class="page-card">
+                        <div class="page-content">
+                            <h3>Ahmed Arif</h3>
+                            <p>Daily Islamic reminders and inspirational content to strengthen your faith.</p>
+                            <button class="follow-btn">Follow</button>
+                        </div>
+                    </div>
+                    <div class="page-card">
+                        <div class="page-content">
+                            <h3>Islamic Quotes</h3>
+                            <p>Beautiful Islamic quotes and sayings from the Quran and Hadith.</p>
+                            <button class="follow-btn">Follow</button>
+                        </div>
+                    </div>
+                    <div class="page-card">
+                        <div class="page-content">
+                            <h3>Light of Paradise</h3>
+                            <p>Guidance for the path to Jannah through Islamic teachings.</p>
+                            <button class="follow-btn">Follow</button>
+                        </div>
+                    </div>
+                    <div class="page-card">
+                        <div class="page-content">
+                            <h3>Zoro Axzz</h3>
+                            <p>Islamic content focused on modern Muslim youth.</p>
+                            <button class="follow-btn">Follow</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="disclaimer">
+                <h3>⚠️ Music Warning</h3>
+                <p>When using music apps like Spotify, Wynk, etc., remember that music is haram in Islam. Fear Allah and avoid listening to music. Instead, listen to Quran recitations or Nasheeds without instruments.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <a href="#" class="mobile-nav-item active" data-section="today">
+            <div class="mobile-nav-icon">📅</div>
+            <div>Today</div>
+        </a>
+        <a href="#" class="mobile-nav-item" data-section="prayers">
+            <div class="mobile-nav-icon">🕌</div>
+            <div>Prayers</div>
+        </a>
+        <a href="#" class="mobile-nav-item" data-section="quran">
+            <div class="mobile-nav-icon">📖</div>
+            <div>Quran</div>
+        </a>
+        <a href="#" class="mobile-nav-item" data-section="foods">
+            <div class="mobile-nav-icon">🍽️</div>
+            <div>Foods</div>
+        </a>
+        <a href="#" class="mobile-nav-item" data-section="store">
+            <div class="mobile-nav-icon">🛍️</div>
+            <div>Store</div>
+        </a>
+        <a href="#" class="mobile-nav-item" data-section="settings">
+            <div class="mobile-nav-icon">⚙️</div>
+            <div>Settings</div>
+        </a>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Islamic Companion</h3>
+                    <p>Your complete guide to Islamic living in the modern world.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#" data-section="today">Today</a></li>
+                        <li><a href="#" data-section="prayers">Prayers</a></li>
+                        <li><a href="#" data-section="quran">Quran</a></li>
+                        <li><a href="#" data-section="foods">Halal Foods</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Connect With Us</h3>
+                    <ul>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Islamic Companion. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Complete 114 Surahs Data
+        const surahs = [
+            { number: 1, name: "Al-Faatiha", nameAr: "الفاتحة", translation: "The Opening", ayas: 7, revelation: "Meccan" },
+            { number: 2, name: "Al-Baqara", nameAr: "البقرة", translation: "The Cow", ayas: 286, revelation: "Medinan" },
+            { number: 3, name: "Aal-i-Imraan", nameAr: "آل عمران", translation: "Family of Imran", ayas: 200, revelation: "Medinan" },
+            { number: 4, name: "An-Nisaa", nameAr: "النساء", translation: "The Women", ayas: 176, revelation: "Medinan" },
+            { number: 5, name: "Al-Maaida", nameAr: "المائدة", translation: "The Table", ayas: 120, revelation: "Medinan" },
+            { number: 6, name: "Al-An'aam", nameAr: "الأنعام", translation: "The Cattle", ayas: 165, revelation: "Meccan" },
+            { number: 7, name: "Al-A'raaf", nameAr: "الأعراف", translation: "The Heights", ayas: 206, revelation: "Meccan" },
+            { number: 8, name: "Al-Anfaal", nameAr: "الأنفال", translation: "The Spoils of War", ayas: 75, revelation: "Medinan" },
+            { number: 9, name: "At-Tawba", nameAr: "التوبة", translation: "The Repentance", ayas: 129, revelation: "Medinan" },
+            { number: 10, name: "Yunus", nameAr: "يونس", translation: "Jonah", ayas: 109, revelation: "Meccan" },
+            { number: 11, name: "Hud", nameAr: "هود", translation: "Hud", ayas: 123, revelation: "Meccan" },
+            { number: 12, name: "Yusuf", nameAr: "يوسف", translation: "Joseph", ayas: 111, revelation: "Meccan" },
+            { number: 13, name: "Ar-Ra'd", nameAr: "الرعد", translation: "The Thunder", ayas: 43, revelation: "Medinan" },
+            { number: 14, name: "Ibrahim", nameAr: "ابراهيم", translation: "Abraham", ayas: 52, revelation: "Meccan" },
+            { number: 15, name: "Al-Hijr", nameAr: "الحجر", translation: "The Rock", ayas: 99, revelation: "Meccan" },
+            { number: 16, name: "An-Nahl", nameAr: "النحل", translation: "The Bee", ayas: 128, revelation: "Meccan" },
+            { number: 17, name: "Al-Israa", nameAr: "الإسراء", translation: "The Night Journey", ayas: 111, revelation: "Meccan" },
+            { number: 18, name: "Al-Kahf", nameAr: "الكهف", translation: "The Cave", ayas: 110, revelation: "Meccan" },
+            { number: 19, name: "Maryam", nameAr: "مريم", translation: "Mary", ayas: 98, revelation: "Meccan" },
+            { number: 20, name: "Taa-Haa", nameAr: "طه", translation: "Taa-Haa", ayas: 135, revelation: "Meccan" },
+            { number: 21, name: "Al-Anbiyaa", nameAr: "الأنبياء", translation: "The Prophets", ayas: 112, revelation: "Meccan" },
+            { number: 22, name: "Al-Hajj", nameAr: "الحج", translation: "The Pilgrimage", ayas: 78, revelation: "Medinan" },
+            { number: 23, name: "Al-Muminoon", nameAr: "المؤمنون", translation: "The Believers", ayas: 118, revelation: "Meccan" },
+            { number: 24, name: "An-Noor", nameAr: "النور", translation: "The Light", ayas: 64, revelation: "Medinan" },
+            { number: 25, name: "Al-Furqaan", nameAr: "الفرقان", translation: "The Criterion", ayas: 77, revelation: "Meccan" },
+            { number: 26, name: "Ash-Shu'araa", nameAr: "الشعراء", translation: "The Poets", ayas: 227, revelation: "Meccan" },
+            { number: 27, name: "An-Naml", nameAr: "النمل", translation: "The Ant", ayas: 93, revelation: "Meccan" },
+            { number: 28, name: "Al-Qasas", nameAr: "القصص", translation: "The Stories", ayas: 88, revelation: "Meccan" },
+            { number: 29, name: "Al-Ankaboot", nameAr: "العنكبوت", translation: "The Spider", ayas: 69, revelation: "Meccan" },
+            { number: 30, name: "Ar-Room", nameAr: "الروم", translation: "The Romans", ayas: 60, revelation: "Meccan" },
+            { number: 31, name: "Luqman", nameAr: "لقمان", translation: "Luqman", ayas: 34, revelation: "Meccan" },
+            { number: 32, name: "As-Sajda", nameAr: "السجدة", translation: "The Prostration", ayas: 30, revelation: "Meccan" },
+            { number: 33, name: "Al-Ahzaab", nameAr: "الأحزاب", translation: "The Clans", ayas: 73, revelation: "Medinan" },
+            { number: 34, name: "Saba", nameAr: "سبإ", translation: "Sheba", ayas: 54, revelation: "Meccan" },
+            { number: 35, name: "Faatir", nameAr: "فاطر", translation: "The Originator", ayas: 45, revelation: "Meccan" },
+            { number: 36, name: "Yaseen", nameAr: "يس", translation: "Yaseen", ayas: 83, revelation: "Meccan" },
+            { number: 37, name: "As-Saaffaat", nameAr: "الصافات", translation: "Those drawn up in Ranks", ayas: 182, revelation: "Meccan" },
+            { number: 38, name: "Saad", nameAr: "ص", translation: "The letter Saad", ayas: 88, revelation: "Meccan" },
+            { number: 39, name: "Az-Zumar", nameAr: "الزمر", translation: "The Groups", ayas: 75, revelation: "Meccan" },
+            { number: 40, name: "Ghafir", nameAr: "غافر", translation: "The Forgiver", ayas: 85, revelation: "Meccan" },
+            { number: 41, name: "Fussilat", nameAr: "فصلت", translation: "Explained in detail", ayas: 54, revelation: "Meccan" },
+            { number: 42, name: "Ash-Shura", nameAr: "الشورى", translation: "Consultation", ayas: 53, revelation: "Meccan" },
+            { number: 43, name: "Az-Zukhruf", nameAr: "الزخرف", translation: "Ornaments of gold", ayas: 89, revelation: "Meccan" },
+            { number: 44, name: "Ad-Dukhaan", nameAr: "الدخان", translation: "The Smoke", ayas: 59, revelation: "Meccan" },
+            { number: 45, name: "Al-Jaathiya", nameAr: "الجاثية", translation: "Crouching", ayas: 37, revelation: "Meccan" },
+            { number: 46, name: "Al-Ahqaf", nameAr: "الأحقاف", translation: "The Wind-Curved Sandhills", ayas: 35, revelation: "Meccan" },
+            { number: 47, name: "Muhammad", nameAr: "محمد", translation: "Muhammad", ayas: 38, revelation: "Medinan" },
+            { number: 48, name: "Al-Fath", nameAr: "الفتح", translation: "The Victory", ayas: 29, revelation: "Medinan" },
+            { number: 49, name: "Al-Hujuraat", nameAr: "الحجرات", translation: "The Rooms", ayas: 18, revelation: "Medinan" },
+            { number: 50, name: "Qaaf", nameAr: "ق", translation: "The letter Qaaf", ayas: 45, revelation: "Meccan" },
+            { number: 51, name: "Adh-Dhaariyat", nameAr: "الذاريات", translation: "The Winnowing Winds", ayas: 60, revelation: "Meccan" },
+            { number: 52, name: "At-Tur", nameAr: "الطور", translation: "The Mount", ayas: 49, revelation: "Meccan" },
+            { number: 53, name: "An-Najm", nameAr: "النجم", translation: "The Star", ayas: 62, revelation: "Meccan" },
+            { number: 54, name: "Al-Qamar", nameAr: "القمر", translation: "The Moon", ayas: 55, revelation: "Meccan" },
+            { number: 55, name: "Ar-Rahman", nameAr: "الرحمن", translation: "The Beneficent", ayas: 78, revelation: "Medinan" },
+            { number: 56, name: "Al-Waaqia", nameAr: "الواقعة", translation: "The Inevitable", ayas: 96, revelation: "Meccan" },
+            { number: 57, name: "Al-Hadid", nameAr: "الحديد", translation: "The Iron", ayas: 29, revelation: "Medinan" },
+            { number: 58, name: "Al-Mujaadila", nameAr: "المجادلة", translation: "The Pleading Woman", ayas: 22, revelation: "Medinan" },
+            { number: 59, name: "Al-Hashr", nameAr: "الحشر", translation: "The Exile", ayas: 24, revelation: "Medinan" },
+            { number: 60, name: "Al-Mumtahana", nameAr: "الممتحنة", translation: "She that is to be examined", ayas: 13, revelation: "Medinan" },
+            { number: 61, name: "As-Saff", nameAr: "الصف", translation: "The Ranks", ayas: 14, revelation: "Medinan" },
+            { number: 62, name: "Al-Jumu'a", nameAr: "الجمعة", translation: "The Congregation", ayas: 11, revelation: "Medinan" },
+            { number: 63, name: "Al-Munaafiqoon", nameAr: "المنافقون", translation: "The Hypocrites", ayas: 11, revelation: "Medinan" },
+            { number: 64, name: "At-Taghaabun", nameAr: "التغابن", translation: "Mutual Disillusion", ayas: 18, revelation: "Medinan" },
+            { number: 65, name: "At-Talaaq", nameAr: "الطلاق", translation: "Divorce", ayas: 12, revelation: "Medinan" },
+            { number: 66, name: "At-Tahrim", nameAr: "التحريم", translation: "The Prohibition", ayas: 12, revelation: "Medinan" },
+            { number: 67, name: "Al-Mulk", nameAr: "الملك", translation: "The Sovereignty", ayas: 30, revelation: "Meccan" },
+            { number: 68, name: "Al-Qalam", nameAr: "القلم", translation: "The Pen", ayas: 52, revelation: "Meccan" },
+            { number: 69, name: "Al-Haaqqa", nameAr: "الحاقة", translation: "The Reality", ayas: 52, revelation: "Meccan" },
+            { number: 70, name: "Al-Ma'aarij", nameAr: "المعارج", translation: "The Ascending Stairways", ayas: 44, revelation: "Meccan" },
+            { number: 71, name: "Nooh", nameAr: "نوح", translation: "Noah", ayas: 28, revelation: "Meccan" },
+            { number: 72, name: "Al-Jinn", nameAr: "الجن", translation: "The Jinn", ayas: 28, revelation: "Meccan" },
+            { number: 73, name: "Al-Muzzammil", nameAr: "المزمل", translation: "The Enshrouded One", ayas: 20, revelation: "Meccan" },
+            { number: 74, name: "Al-Muddathir", nameAr: "المدثر", translation: "The Cloaked One", ayas: 56, revelation: "Meccan" },
+            { number: 75, name: "Al-Qiyaama", nameAr: "القيامة", translation: "The Resurrection", ayas: 40, revelation: "Meccan" },
+            { number: 76, name: "Al-Insaan", nameAr: "الانسان", translation: "Man", ayas: 31, revelation: "Medinan" },
+            { number: 77, name: "Al-Mursalaat", nameAr: "المرسلات", translation: "The Emissaries", ayas: 50, revelation: "Meccan" },
+            { number: 78, name: "An-Naba", nameAr: "النبأ", translation: "The Announcement", ayas: 40, revelation: "Meccan" },
+            { number: 79, name: "An-Naazi'aat", nameAr: "النازعات", translation: "Those who drag forth", ayas: 46, revelation: "Meccan" },
+            { number: 80, name: "Abasa", nameAr: "عبس", translation: "He frowned", ayas: 42, revelation: "Meccan" },
+            { number: 81, name: "At-Takwir", nameAr: "التكوير", translation: "The Overthrowing", ayas: 29, revelation: "Meccan" },
+            { number: 82, name: "Al-Infitaar", nameAr: "الانفطار", translation: "The Cleaving", ayas: 19, revelation: "Meccan" },
+            { number: 83, name: "Al-Mutaffifin", nameAr: "المطففين", translation: "Defrauding", ayas: 36, revelation: "Meccan" },
+            { number: 84, name: "Al-Inshiqaaq", nameAr: "الانشقاق", translation: "The Splitting Open", ayas: 25, revelation: "Meccan" },
+            { number: 85, name: "Al-Burooj", nameAr: "البروج", translation: "The Mansions of the Stars", ayas: 22, revelation: "Meccan" },
+            { number: 86, name: "At-Taariq", nameAr: "الطارق", translation: "The Morning Star", ayas: 17, revelation: "Meccan" },
+            { number: 87, name: "Al-A'laa", nameAr: "الأعلى", translation: "The Most High", ayas: 19, revelation: "Meccan" },
+            { number: 88, name: "Al-Ghaashiya", nameAr: "الغاشية", translation: "The Overwhelming", ayas: 26, revelation: "Meccan" },
+            { number: 89, name: "Al-Fajr", nameAr: "الفجر", translation: "The Dawn", ayas: 30, revelation: "Meccan" },
+            { number: 90, name: "Al-Balad", nameAr: "البلد", translation: "The City", ayas: 20, revelation: "Meccan" },
+            { number: 91, name: "Ash-Shams", nameAr: "الشمس", translation: "The Sun", ayas: 15, revelation: "Meccan" },
+            { number: 92, name: "Al-Lail", nameAr: "الليل", translation: "The Night", ayas: 21, revelation: "Meccan" },
+            { number: 93, name: "Ad-Dhuhaa", nameAr: "الضحى", translation: "The Morning Hours", ayas: 11, revelation: "Meccan" },
+            { number: 94, name: "Ash-Sharh", nameAr: "الشرح", translation: "The Relief", ayas: 8, revelation: "Meccan" },
+            { number: 95, name: "At-Tin", nameAr: "التين", translation: "The Fig", ayas: 8, revelation: "Meccan" },
+            { number: 96, name: "Al-Alaq", nameAr: "العلق", translation: "The Clot", ayas: 19, revelation: "Meccan" },
+            { number: 97, name: "Al-Qadr", nameAr: "القدر", translation: "The Power", ayas: 5, revelation: "Meccan" },
+            { number: 98, name: "Al-Bayyina", nameAr: "البينة", translation: "The Clear Proof", ayas: 8, revelation: "Medinan" },
+            { number: 99, name: "Az-Zalzala", nameAr: "الزلزلة", translation: "The Earthquake", ayas: 8, revelation: "Medinan" },
+            { number: 100, name: "Al-Aadiyaat", nameAr: "العاديات", translation: "The Courser", ayas: 11, revelation: "Meccan" },
+            { number: 101, name: "Al-Qaari'a", nameAr: "القارعة", translation: "The Calamity", ayas: 11, revelation: "Meccan" },
+            { number: 102, name: "At-Takaathur", nameAr: "التكاثر", translation: "The Rivalry in world increase", ayas: 8, revelation: "Meccan" },
+            { number: 103, name: "Al-Asr", nameAr: "العصر", translation: "The Declining Day", ayas: 3, revelation: "Meccan" },
+            { number: 104, name: "Al-Humaza", nameAr: "الهمزة", translation: "The Traducer", ayas: 9, revelation: "Meccan" },
+            { number: 105, name: "Al-Fil", nameAr: "الفيل", translation: "The Elephant", ayas: 5, revelation: "Meccan" },
+            { number: 106, name: "Quraish", nameAr: "قريش", translation: "Quraysh", ayas: 4, revelation: "Meccan" },
+            { number: 107, name: "Al-Maa'un", nameAr: "الماعون", translation: "The Small kindnesses", ayas: 7, revelation: "Meccan" },
+            { number: 108, name: "Al-Kawthar", nameAr: "الكوثر", translation: "The Abundance", ayas: 3, revelation: "Meccan" },
+            { number: 109, name: "Al-Kaafiroon", nameAr: "الكافرون", translation: "The Disbelievers", ayas: 6, revelation: "Meccan" },
+            { number: 110, name: "An-Nasr", nameAr: "النصر", translation: "The Divine Support", ayas: 3, revelation: "Medinan" },
+            { number: 111, name: "Al-Masad", nameAr: "المسد", translation: "The Palm Fiber", ayas: 5, revelation: "Meccan" },
+            { number: 112, name: "Al-Ikhlaas", nameAr: "الإخلاص", translation: "The Sincerity", ayas: 4, revelation: "Meccan" },
+            { number: 113, name: "Al-Falaq", nameAr: "الفلق", translation: "The Daybreak", ayas: 5, revelation: "Meccan" },
+            { number: 114, name: "An-Naas", nameAr: "الناس", translation: "Mankind", ayas: 6, revelation: "Meccan" }
+        ];
+
+        // Sample Halal Restaurants Data
+        const restaurants = [
+            { name: "Al-Madinah Restaurant", rating: "⭐ 4.5", distance: "1.2 km", category: "restaurants" },
+            { name: "Halal Meat Center", rating: "⭐ 4.2", distance: "0.8 km", category: "groceries" },
+            { name: "Mecca Catering", rating: "⭐ 4.7", distance: "2.1 km", category: "catering" },
+            { name: "Islamic Bakery", rating: "⭐ 4.3", distance: "1.5 km", category: "bakery" },
+            { name: "Istanbul Kebab House", rating: "⭐ 4.6", distance: "0.5 km", category: "restaurants" },
+            { name: "Halal Grocers", rating: "⭐ 4.1", distance: "1.8 km", category: "groceries" }
+        ];
+
+        // Sample Ayahs for Surah Al-Fatiha (for demo)
+        const fatihaAyahs = [
+            {
+                number: 1,
+                arabic: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+                english: "In the name of Allah, the Entirely Merciful, the Especially Merciful.",
+                tamil: "அல்லாஹ்வின் திருப்பெயரால், அவன் மிகவும் கருணை உடையவன், கண்ணியம் மிக்கவன்."
+            },
+            {
+                number: 2,
+                arabic: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
+                english: "[All] praise is [due] to Allah, Lord of the worlds.",
+                tamil: "அனைத்து புகழும் அல்லாஹ்வுக்கே, அவனே அகிலங்கள் அனைத்தின் இறைவன்."
+            },
+            {
+                number: 3,
+                arabic: "الرَّحْمَٰنِ الرَّحِيمِ",
+                english: "The Entirely Merciful, the Especially Merciful.",
+                tamil: "அவன் மிகவும் கருணை உடையவன், கண்ணியம் மிக்கவன்."
+            },
+                        {
+                number: 4,
+                arabic: "مَالِكِ يَوْمِ الدِّينِ",
+                english: "Sovereign of the Day of Recompense.",
+                tamil: "வினைத் தீர்ப்பின் நாளின் அதிபதி."
+            },
+            {
+                number: 5,
+                arabic: "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
+                english: "It is You we worship and You we ask for help.",
+                tamil: "உன்னையே நாங்கள் வணங்குகிறோம், உன்னிடமே நாங்கள் உதவி தேடுகிறோம்."
+            },
+            {
+                number: 6,
+                arabic: "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ",
+                english: "Guide us to the straight path.",
+                tamil: "எங்களை நேரான வழியில் நடத்துவாயாக."
+            },
+            {
+                number: 7,
+                arabic: "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ",
+                english: "The path of those upon whom You have bestowed favor, not of those who have evoked [Your] anger or of those who are astray.",
+                tamil: "நீ அருள் புரிந்தவர்களின் வழியில், உன் கோபத்திற்கு உள்ளானவர்களின் வழியில் அல்ல, வழி கெட்டவர்களின் வழியிலும் அல்ல."
+            }
+        ];
+
+        let currentAudio = null;
+        let currentSurah = null;
+
+        // Navigation functionality
+        document.querySelectorAll('.nav-link, .mobile-nav-item, .footer-section a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const sectionId = this.getAttribute('data-section');
+                if (!sectionId) return;
+                
+                // Hide all sections
+                document.querySelectorAll('.section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show selected section
+                document.getElementById(sectionId).classList.add('active');
+                
+                // Update active nav item
+                document.querySelectorAll('.nav-link, .mobile-nav-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // If Quran section is selected, populate surah list
+                if (sectionId === 'quran') {
+                    populateSurahList();
+                    hideAyahs();
+                }
+                
+                // If Foods section is selected, populate restaurants
+                if (sectionId === 'foods') {
+                    populateRestaurants();
+                }
+            });
+        });
+
+        // Populate Quran surah list
+        function populateSurahList() {
+            const surahList = document.getElementById('surahList');
+            surahList.innerHTML = '';
+            
+            surahs.forEach(surah => {
+                const surahItem = document.createElement('div');
+                surahItem.className = 'surah-item';
+                
+                surahItem.innerHTML = `
+                    <div class="surah-header">
+                        <div class="surah-number">${surah.number}</div>
+                        <div class="surah-name">${surah.name}</div>
+                    </div>
+                    <div class="surah-name-arabic">${surah.nameAr}</div>
+                    <div class="surah-details">
+                        <div>${surah.translation}</div>
+                        <div>${surah.ayas} verses</div>
+                        <div class="surah-revelation ${surah.revelation.toLowerCase()}">${surah.revelation}</div>
+                    </div>
+                `;
+                
+                surahItem.addEventListener('click', function() {
+                    showSurahAyahs(surah);
+                });
+                
+                surahList.appendChild(surahItem);
+            });
+        }
+
+        // Show ayahs for selected surah
+        function showSurahAyahs(surah) {
+            currentSurah = surah;
+            document.getElementById('surahList').style.display = 'none';
+            document.getElementById('ayahDisplay').style.display = 'block';
+            document.getElementById('currentSurahTitle').textContent = `Surah ${surah.name} - ${surah.translation}`;
+            
+            const ayahsContainer = document.getElementById('ayahsContainer');
+            ayahsContainer.innerHTML = '';
+            
+            // For demo, using Al-Fatiha ayahs. In real app, you would fetch from API
+            const ayahsToShow = surah.number === 1 ? fatihaAyahs : fatihaAyahs; // Demo only
+            
+            ayahsToShow.forEach(ayah => {
+                const ayahElement = document.createElement('div');
+                ayahElement.className = 'ayah-container';
+                                ayahElement.innerHTML = `
+                    <div class="ayah-arabic">${ayah.arabic}</div>
+                    <div class="ayah-number">${ayah.number}</div>
+                    <div class="ayah-translation">${ayah.english}</div>
+                    <div class="ayah-tamil">${ayah.tamil}</div>
+                `;
+                ayahsContainer.appendChild(ayahElement);
+            });
+        }
+
+        // Hide ayahs and show surah list
+        function hideAyahs() {
+            document.getElementById('surahList').style.display = 'grid';
+            document.getElementById('ayahDisplay').style.display = 'none';
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio = null;
+            }
+            resetAudioButtons();
+        }
+
+        // Reset audio buttons to initial state
+        function resetAudioButtons() {
+            document.getElementById('playAudio').disabled = false;
+            document.getElementById('pauseAudio').disabled = true;
+            document.getElementById('stopAudio').disabled = true;
+        }
+
+        // Audio controls
+        document.getElementById('playAudio').addEventListener('click', function() {
+            if (currentSurah) {
+                // Create audio element for demo
+                currentAudio = new Audio();
+                // For demo purposes, we'll use a placeholder
+                // In real app, you would use actual audio URLs from Tanzil API
+                
+                // Simulate audio playing
+                this.disabled = true;
+                document.getElementById('pauseAudio').disabled = false;
+                document.getElementById('stopAudio').disabled = false;
+                
+                alert(`Playing audio for Surah ${currentSurah.name}\n\nIn the full app, this would play actual Quran recitation from Tanzil API.`);
+            }
+        });
+
+        document.getElementById('pauseAudio').addEventListener('click', function() {
+            if (currentAudio) {
+                currentAudio.pause();
+                document.getElementById('playAudio').disabled = false;
+                document.getElementById('pauseAudio').disabled = true;
+            }
+        });
+
+        document.getElementById('stopAudio').addEventListener('click', function() {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                resetAudioButtons();
+            }
+        });
+
+        // Populate restaurants
+        function populateRestaurants() {
+            const restaurantList = document.getElementById('restaurantList');
+            restaurantList.innerHTML = '';
+            
+            restaurants.forEach(restaurant => {
+                const restaurantCard = document.createElement('div');
+                restaurantCard.className = 'restaurant-card';
+                restaurantCard.innerHTML = `
+                    <div class="restaurant-name">${restaurant.name}</div>
+                    <div class="restaurant-rating">${restaurant.rating}</div>
+                    <div class="restaurant-distance">${restaurant.distance} away</div>
+                    <button class="view-btn">View Details</button>
+                `;
+                
+                // Add click event to view button
+                restaurantCard.querySelector('.view-btn').addEventListener('click', function() {
+                    alert(`Showing details for ${restaurant.name}\n\nRating: ${restaurant.rating}\nDistance: ${restaurant.distance}\nCategory: ${restaurant.category}`);
+                });
+                
+                restaurantList.appendChild(restaurantCard);
+            });
+        }
+
+        // Food category filtering
+        document.querySelectorAll('.food-category').forEach(category => {
+            category.addEventListener('click', function() {
+                const categoryType = this.getAttribute('data-category');
+                const categoryName = this.querySelector('h3').textContent;
+                alert(`Showing ${categoryName} options\n\nIn the full app, this would filter restaurants by ${categoryType} category.`);
+            });
+        });
+
+        // Search functionality for surahs
+        document.getElementById('surahSearch').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+                        const surahItems = document.querySelectorAll('.surah-item');
+            
+            surahItems.forEach(item => {
+                const surahName = item.querySelector('.surah-name').textContent.toLowerCase();
+                const surahTranslation = item.querySelector('.surah-details div').textContent.toLowerCase();
+                
+                if (surahName.includes(searchTerm) || surahTranslation.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // Search functionality for foods
+        document.getElementById('foodSearch').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const restaurantCards = document.querySelectorAll('.restaurant-card');
+            
+            restaurantCards.forEach(card => {
+                const restaurantName = card.querySelector('.restaurant-name').textContent.toLowerCase();
+                
+                if (restaurantName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // File upload functionality
+        document.getElementById('uploadTrigger').addEventListener('click', function() {
+            document.getElementById('fileUpload').click();
+        });
+
+        document.getElementById('fileUpload').addEventListener('change', function(e) {
+            if (this.files && this.files.length > 0) {
+                alert(`${this.files.length} image(s) selected for upload\n\nIn a full app, these would be uploaded to your server and displayed in the store.`);
+            }
+        });
+
+        // Store buy buttons
+        document.querySelectorAll('.buy-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const productName = this.closest('.product-content').querySelector('h3').textContent;
+                const productPrice = this.closest('.product-content').querySelector('.product-price').textContent;
+                alert(`Added to cart: ${productName}\nPrice: ${productPrice}\n\nIn the full app, this would add the item to your shopping cart.`);
+            });
+        });
+
+        // Follow buttons
+        document.querySelectorAll('.follow-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const pageName = this.closest('.page-content').querySelector('h3').textContent;
+                alert(`Now following ${pageName}\n\nYou will receive updates from this Islamic page.`);
+            });
+        });
+
+        // Toggle switches functionality
+        document.getElementById('adhanToggle').addEventListener('change', function() {
+            alert(`Adhan notifications ${this.checked ? 'enabled' : 'disabled'}`);
+        });
+
+        document.getElementById('quranToggle').addEventListener('change', function() {
+            alert(`Quran reminders ${this.checked ? 'enabled' : 'disabled'}`);
+        });
+
+        document.getElementById('forceAdhanToggle').addEventListener('change', function() {
+            alert(`Force adhan notifications ${this.checked ? 'enabled' : 'disabled'}`);
+        });
+
+        document.getElementById('locationToggle').addEventListener('change', function() {
+            alert(`Location services ${this.checked ? 'enabled' : 'disabled'}`);
+        });
+
+        document.getElementById('darkModeToggle').addEventListener('change', function() {
+            alert(`Dark mode ${this.checked ? 'enabled' : 'disabled'}`);
+        });
+
+        // Initialize the app
+        populateSurahList();
+        populateRestaurants();
+        resetAudioButtons();
+    </script>
+</body>
+</html>
